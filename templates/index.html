@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>GHost AI</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: black;
+  color: white;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif;
+  transition: opacity 0.6s ease;
+}
+
+/* ================= HEADER ================= */
+.header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  padding: 16px 80px;          /* slightly smaller */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  backdrop-filter: blur(14px);
+  z-index: 1000;
+}
+
+.logo {
+  font-size: 20px;
+  font-weight: 600;
+}
+
+nav a {
+  position: relative;
+  transition: color 0.4s ease, text-shadow 0.6s ease;
+}
+
+/* ACTIVE NAV ITEM */
+nav a.active {
+  color: #c77dff;
+
+  text-shadow:
+    0 0 6px rgba(199,125,255,0.9),
+    0 0 14px rgba(184,76,255,0.8),
+    0 0 28px rgba(184,76,255,0.6),
+    0 0 48px rgba(184,76,255,0.45);
+}
+
+/* ================= SECTIONS ================= */
+.section {
+  height: 100vh;
+  padding: 0 120px;
+  display: flex;
+  align-items: center;
+}
+
+.vp-section {
+  perspective: 1200px;
+}
+
+/* ================= TEXT ================= */
+.title {
+  font-size: 88px;            /* slightly reduced */
+  font-weight: 800;
+  line-height: 1.05;
+}
+
+.subtitle {
+  margin-top: 26px;
+  font-size: 17px;
+  max-width: 480px;
+  color: rgba(255,255,255,0.65);
+}
+
+
+/* GLASS CARD */
+.glass {
+  position: relative;
+  padding: 64px;
+  max-width: 720px;
+  border-radius: 28px;
+  background: rgba(255,255,255,0.06);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255,255,255,0.15);
+  box-shadow: 0 40px 80px rgba(0,0,0,0.7);
+  cursor: pointer;
+
+  --x: 50%;
+  --y: 50%;
+  --glow: 0;
+
+  will-change: transform;
+  transform-style: preserve-3d;
+  transition:
+    transform 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 0.35s ease;
+}
+
+/* Hover = subtle lift */
+.glass:hover {
+  transform: translateY(-2px);
+}
+
+/* Press illusion */
+.glass:active {
+  transform: scale(0.985);
+}
+
+/* GLOW */
+.glass::before {
+  content: "";
+  position: absolute;
+  inset: -50%;
+  background: radial-gradient(
+    circle at var(--x) var(--y),
+    rgba(184,76,255,0.45),
+    rgba(184,76,255,0.2) 35%,
+    transparent 65%
+  );
+  filter: blur(120px);
+  opacity: var(--glow);
+  transition:
+    opacity 0.9s ease,
+    filter 1.2s ease;
+  pointer-events: none;
+}
+/* Stronger glow while active */
+.glass:active::before {
+  opacity: 1;
+  filter: blur(140px);
+}
+/* ================= CTA ================= */
+.cta-wrap {
+  margin-top: 36px;
+}
+
+.join-btn {
+  padding: 10px 24px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #7a2cff, #b26bff);
+  color: white;
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+}
+.cta-wrap.center {
+  margin-top: 40px;
+  display: flex;
+  justify-content: center;
+}
+.join-btn {
+  padding: 12px 28px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #7a2cff, #b26bff);
+  color: white;
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+
+  box-shadow:
+    0 0 12px rgba(184,76,255,0.6),
+    0 0 30px rgba(184,76,255,0.35);
+
+  transition:
+    transform 0.35s ease,
+    box-shadow 0.45s ease;
+}
+
+.join-btn:hover {
+  transform: translateY(-3px) scale(1.03);
+  box-shadow:
+    0 0 18px rgba(184,76,255,0.9),
+    0 0 50px rgba(184,76,255,0.6);
+}
+.glass-link {
+  text-decoration: none;
+  color: inherit;
+}
+.glass {
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+.glass-link:hover .glass {
+  transform: scale(1.03);
+}
+
+</style>
+
+<!-- ================= HEADER ================= -->
+<header class="header">
+  <div class="logo">👻 GHost AI</div>
+  <nav>
+    <a href="#home" class="nav-link active">Home</a>
+    <a href="#features" class="nav-link">Features</a>
+    <a href="#premium" class="nav-link">Premium</a>
+    <a href="#connect" class="nav-link">Connect</a>
+  </nav>
+</header>
+
+<!-- ================= SECTIONS ================= -->
+<section id="home" class="section vp-section">
+  <div class="glass" data-link="/intro">
+    <h1 class="title">WELCOME<br>TO GHost-AI</h1>
+
+  </div>
+</section>
+
+<section id="features" class="section vp-section">
+   <div class="glass" data-link="/features">
+      <h1 class="title">Built Like a Human</h1>
+      <p class="subtitle">
+        Memory • Live data • Hallucination guard • Context awareness
+      </p>
+    </div>
+</section>
+
+<section id="premium" class="section vp-section">
+  <div class="glass" data-link="/premium">
+    <h1 class="title">Premium Intelligence</h1>
+    <p class="subtitle">
+      Advanced reasoning, personalized learning, and exclusive features coming soon.
+    </p>
+  </div>
+</section>
+
+<section id="connect" class="section vp-section">
+  <div class="glass" data-link="/connect">
+    <h1 class="title">Connect with GHost</h1>
+    <div class="cta-wrap center">
+<a href="/signup" class="join-btn" onclick="event.stopPropagation()">
+  JOIN US
+</a>
+</div>
+  </div>
+</section>
+
+<!-- ================= INTERACTION ================= -->
+<script>
+document.querySelectorAll(".glass").forEach(card => {
+  card.addEventListener("mousemove", e => {
+    const rect = card.getBoundingClientRect();
+    const x = ((e.clientX - rect.left) / rect.width) * 100;
+    const y = ((e.clientY - rect.top) / rect.height) * 100;
+
+    card.style.setProperty("--x", `${x}%`);
+    card.style.setProperty("--y", `${y}%`);
+    card.style.setProperty("--glow", "1");
+  });
+
+  card.addEventListener("mouseleave", () => {
+    card.style.setProperty("--glow", "0");
+  });
+});
+</script>
+<script>
+const sections = document.querySelectorAll("section");
+const navLinks = document.querySelectorAll(".nav-link");
+
+function setActiveSection() {
+  let current = "";
+
+  sections.forEach(section => {
+    const rect = section.getBoundingClientRect();
+    const sectionTop = rect.top;
+    const sectionHeight = rect.height;
+
+    // Section is considered active when its center is in viewport
+    if (sectionTop <= window.innerHeight * 0.5 &&
+        sectionTop + sectionHeight > window.innerHeight * 0.5) {
+      current = section.getAttribute("id");
+    }
+  });
+
+  navLinks.forEach(link => {
+    link.classList.remove("active");
+    if (link.getAttribute("href") === `#${current}`) {
+      link.classList.add("active");
+    }
+  });
+}
+
+// Run on scroll + load
+window.addEventListener("scroll", setActiveSection);
+window.addEventListener("load", setActiveSection);
+</script>
+
+<script src="https://unpkg.com/gsap@3/dist/gsap.min.js"></script>
+<script src="https://unpkg.com/gsap@3/dist/ScrollTrigger.min.js"></script>
+
+<script>
+gsap.registerPlugin(ScrollTrigger);
+
+// Disable scroll restoration glitches
+ScrollTrigger.clearScrollMemory();
+window.history.scrollRestoration = "manual";
+
+document.querySelectorAll(".glass").forEach(card => {
+  const elements = card.querySelectorAll("h1, p, button");
+
+  // Glass pop (ONCE, never disappears)
+  gsap.from(card, {
+    opacity: 0,
+    y: 40,
+    scale: 0.96,
+    duration: 1.1,
+    ease: "power3.out",
+    scrollTrigger: {
+      trigger: card,
+      start: "top 85%",
+      once: true
+    }
+  });
+
+  // Premium stagger text
+  gsap.from(elements, {
+    opacity: 0,
+    y: 18,
+    duration: 0.7,
+    ease: "power2.out",
+    stagger: 0.12,
+    scrollTrigger: {
+      trigger: card,
+      start: "top 85%",
+      once: true
+    }
+  });
+});
+</script>
+<script>
+document.querySelectorAll(".glass").forEach(card => {
+  const link = card.getAttribute("data-link");
+
+  card.addEventListener("mousedown", () => {
+    card.style.transform = "scale(0.985)";
+  });
+
+  card.addEventListener("mouseup", () => {
+    card.style.transform = "scale(1)";
+
+    if (link) {
+      setTimeout(() => {
+        window.location.href = link;
+      }, 120); // Apple-like rebound
+    }
+  });
+
+  card.addEventListener("mouseleave", () => {
+    card.style.transform = "scale(1)";
+  });
+});
+</script>
+</body>
+</html>

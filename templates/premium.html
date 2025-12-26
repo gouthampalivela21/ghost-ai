@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>GHost AI — Premium</title>
+
+  <style>
+    /* RESET */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: black;
+      color: white;
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif;
+      overflow-x: hidden;
+      overscroll-behavior-x: none;
+      touch-action: pan-y;
+    }
+
+    /* BACKGROUND */
+    .bg {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      background:
+        radial-gradient(circle at 30% 40%, rgba(184,76,255,0.18), transparent 60%),
+        radial-gradient(circle at 70% 60%, rgba(120,40,255,0.12), transparent 65%),
+        black;
+    }
+
+    main {
+      position: relative;
+    }
+
+    .intro-section {
+      height: 100vh;
+      padding: 0 12vw;
+      display: flex;
+      align-items: center;
+      position: relative;
+    }
+
+    .story-content {
+      max-width: 760px;
+    }
+
+    .story-title {
+      font-size: clamp(56px, 6vw, 96px);
+      font-weight: 800;
+      line-height: 1.05;
+      letter-spacing: -1.5px;
+    }
+
+    .story-text {
+      margin-top: 28px;
+      font-size: 20px;
+      line-height: 1.6;
+      color: rgba(255,255,255,0.72);
+    }
+
+    /* REVEAL */
+    .reveal {
+      opacity: 0;
+      transform: translateY(80px) scale(0.96);
+      transition: opacity 1s ease, transform 1s ease;
+    }
+
+    .reveal.active {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+
+    /* iOS EXIT SLIDE */
+    body.leaving {
+      transition:
+        transform 0.55s cubic-bezier(0.22, 1, 0.36, 1),
+        opacity 0.4s ease;
+      transform: translateX(60px) scale(0.98);
+      opacity: 0;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="bg"></div>
+
+<main>
+
+  <section class="intro-section">
+    <div class="story-content reveal">
+      <h1 class="story-title">Premium Intelligence</h1>
+      <p class="story-text">
+        Unlock the full potential of GHost AI.
+        Premium transforms your assistant into a deeply personal,
+        continuously evolving intelligence.
+      </p>
+    </div>
+  </section>
+
+  <section class="intro-section">
+    <div class="story-content reveal">
+      <h1 class="story-title">Long-Term Memory</h1>
+      <p class="story-text">
+        GHost remembers your goals, preferences, and workflows
+        across sessions — no resets, no loss.
+      </p>
+    </div>
+  </section>
+
+  <section class="intro-section">
+    <div class="story-content reveal">
+      <h1 class="story-title">Advanced Reasoning</h1>
+      <p class="story-text">
+        Multi-step thinking, deeper context awareness,
+        and professional-grade intelligence.
+      </p>
+    </div>
+  </section>
+
+  <section class="intro-section">
+    <div class="story-content reveal">
+      <h1 class="story-title">Priority Live Data</h1>
+      <p class="story-text">
+        Faster access to verified real-time information
+        with enhanced hallucination protection.
+      </p>
+    </div>
+  </section>
+
+  <section class="intro-section">
+    <div class="story-content reveal">
+      <h1 class="story-title">Early & Exclusive Access</h1>
+      <p class="story-text">
+        Be first to experience new abilities,
+        experimental features, and next-generation AI.
+      </p>
+    </div>
+  </section>
+
+</main>
+
+<!-- REVEAL -->
+<script>
+const observer = new IntersectionObserver(
+  entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("active");
+      }
+    });
+  },
+  { threshold: 0.35 }
+);
+
+document.querySelectorAll(".reveal").forEach(el => observer.observe(el));
+</script>
+
+<!-- 🍎 APPLE SAFE BACK + SLIDE -->
+<script>
+const FALLBACK_URL = "/";
+let startX = null;
+
+function goBackIOS() {
+  document.body.classList.add("leaving");
+
+  setTimeout(() => {
+    if (document.referrer && !document.referrer.includes("/premium")) {
+      location.href = document.referrer;
+    } else {
+      location.href = FALLBACK_URL;
+    }
+  }, 420);
+}
+
+/* Swipe right */
+window.addEventListener("touchstart", e => {
+  startX = e.touches[0].clientX;
+});
+
+window.addEventListener("touchend", e => {
+  if (!startX) return;
+  const diff = e.changedTouches[0].clientX - startX;
+  if (diff > 120) goBackIOS();
+  startX = null;
+});
+
+/* Empty click */
+document.addEventListener("click", e => {
+  if (e.target.closest("main, section, h1, p, a, button")) return;
+  goBackIOS();
+});
+</script>
+
+</body>
+</html>

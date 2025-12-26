@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>GHost AI — Connect</title>
+</head>
+
+<body class="intro-body">
+
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: black;
+  color: white;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif;
+  overflow-x: hidden;
+  overscroll-behavior-x: none;
+  touch-action: pan-y;
+}
+
+/* iOS SLIDE IN */
+body {
+  animation: slideIn 0.45s cubic-bezier(.25,.8,.25,1);
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(30px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+/* BACKGROUND */
+.bg {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background:
+    radial-gradient(circle at 30% 40%, rgba(184,76,255,0.18), transparent 60%),
+    radial-gradient(circle at 70% 60%, rgba(120,40,255,0.12), transparent 65%),
+    black;
+}
+
+main {
+  position: relative;
+}
+
+.intro-section {
+  height: 100vh;
+  padding: 0 12vw;
+  display: flex;
+  align-items: center;
+}
+
+.story-content {
+  max-width: 760px;
+}
+
+.story-title {
+  font-size: clamp(56px, 6vw, 96px);
+  font-weight: 800;
+  line-height: 1.05;
+}
+
+.story-text {
+  margin-top: 28px;
+  font-size: 20px;
+  line-height: 1.6;
+  color: rgba(255,255,255,0.72);
+}
+
+.highlight {
+  color: #b84cff;
+  font-weight: 600;
+}
+
+/* REVEAL */
+.reveal {
+  opacity: 0;
+  transform: translateY(60px);
+  transition: 0.9s ease;
+}
+
+.reveal.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+</style>
+
+<div class="bg"></div>
+
+<main>
+  <section class="intro-section">
+    <div class="story-content reveal">
+      <h1 class="story-title">Connect With GHost</h1>
+      <p class="story-text">
+        GHost AI isn’t just an assistant —
+        it’s a presence you connect with across platforms.
+      </p>
+    </div>
+  </section>
+
+  <section class="intro-section">
+    <div class="story-content reveal">
+      <h1 class="story-title">One Identity Everywhere</h1>
+      <p class="story-text">
+        One continuous intelligence across devices and sessions.
+      </p>
+    </div>
+  </section>
+
+  <section class="intro-section">
+    <div class="story-content reveal">
+      <h1 class="story-title">Secure by Design</h1>
+      <p class="story-text">
+        Privacy-first. Full control. Zero compromise.
+      </p>
+    </div>
+  </section>
+</main>
+
+<!-- REVEAL -->
+<script>
+const observer = new IntersectionObserver(
+  entries => entries.forEach(e => e.isIntersecting && e.target.classList.add("active")),
+  { threshold: 0.35 }
+);
+document.querySelectorAll(".reveal").forEach(el => observer.observe(el));
+</script>
+
+<!-- 🍎 APPLE SAFE BACK -->
+<script>
+const FALLBACK_URL = "/";
+let startX = null;
+
+function goBackSafe() {
+  if (document.referrer && !document.referrer.includes(location.pathname)) {
+    location.href = document.referrer;
+  } else {
+    location.href = FALLBACK_URL;
+  }
+}
+
+// swipe right
+window.addEventListener("touchstart", e => startX = e.touches[0].clientX);
+window.addEventListener("touchend", e => {
+  if (!startX) return;
+  if (e.changedTouches[0].clientX - startX > 120) goBackSafe();
+  startX = null;
+});
+
+// tap empty background
+document.addEventListener("click", e => {
+  if (!e.target.closest("main")) goBackSafe();
+});
+</script>
+
+</body>
+</html>

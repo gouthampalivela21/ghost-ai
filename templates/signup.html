@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>GHost AI</title>
+
+<style>
+    body {
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        height:100vh;
+        margin:0;
+        background:#000;
+        font-family:Arial;
+        color:white;
+    }
+
+    .box {
+        width:380px;
+        padding:40px;
+        text-align:center;
+        background:rgba(20,20,20,0.7);
+        backdrop-filter:blur(12px);
+        border-radius:16px;
+        border:1px solid rgba(255,255,255,0.15);
+        box-shadow:0 0 35px rgba(162,0,255,0.45);
+    }
+
+    h2 {
+        font-size:30px;
+        margin-bottom:15px;
+    }
+
+    label { float:left; margin-left:5px; font-size:14px; opacity:.85; }
+
+    input {
+        width:90%;
+        padding:12px 15px;
+        border-radius:12px;
+        border:2px solid rgba(162,0,255,0.25);
+        background:rgba(0,0,0,0.65);
+        color:white;
+        outline:none;
+        font-size:15px;
+        margin-bottom:15px;
+        transition:.25s;
+    }
+
+    input:focus {
+        border-color:#b043ff;
+        box-shadow:0 0 25px rgba(176,46,255,0.8);
+    }
+
+    button {
+        width:100%;
+        padding:12px;
+        border:none;
+        border-radius:10px;
+        color:white;
+        background:linear-gradient(to right,#bb29ff,#7a00ff);
+        font-size:16px;
+        cursor:pointer;
+        margin-top:8px;
+        box-shadow:0 0 18px rgba(150,0,255,0.35);
+    }
+
+    button:hover {
+        transform:translateY(-2px);
+        box-shadow:0 0 30px rgba(150,0,255,0.75);
+    }
+
+    a { color:#c26bff; font-size:14px; }
+    
+</style>
+</head>
+<body>
+
+<div class="box">
+    <h2>Create Account</h2>
+    <form action="/signup" method="POST">
+        <input type="text" name="name" id="nameInput"
+    placeholder="name" required>
+
+        <input type="email" name="email" id="emailInput"
+    placeholder="email" required>
+
+       <div class="password-wrapper" style="position: relative;">
+      <span id="togglePw" 
+        style="
+              position:absolute;
+              right:12px;
+              top:40%;
+              transform:translateY(-50%);
+              cursor: pointer;
+              font-size: 20px;
+              opacity: 0.6;
+              transition: 0.2s;
+        ">🐵</span>
+      <input type="password" name="password" id="passwordInput"
+        placeholder="Password" style="width:83%;
+        padding-right:40px;"/>
+    </div>
+        <button type="submit">Sign Up</button>
+    </form>
+
+    <br>
+    <a href="/login">Already have an account? Login</a>
+
+</div>
+<script>
+  const pwInput = document.getElementById("passwordInput");
+  const togglePw = document.getElementById("togglePw");
+
+  togglePw.onclick = () => {
+    if (pwInput.type === "password") {
+      pwInput.type = "text";
+      togglePw.textContent = "🙈";
+    } else {
+      pwInput.type = "password";
+      togglePw.textContent = "🐵";
+    }
+  };
+</script>
+</body>
+</html>

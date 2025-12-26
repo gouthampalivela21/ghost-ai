@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>GHost AI</title>
+
+  <style>
+      body {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          height: 100vh;
+          margin: 0;
+          background: #000;
+          font-family: Arial, sans-serif;
+          color: #fff;
+      }
+
+      .box {
+          width: 360px;
+          padding: 35px;
+          background: rgba(20,20,20,0.6);
+          backdrop-filter: blur(12px);
+          border-radius: 16px;
+          text-align: center;
+
+          box-shadow: 0 0 35px rgba(162,0,255,0.45);
+          border: 1px solid rgba(255,255,255,0.15);
+      }
+
+      h2 { margin-bottom: 8px; font-size: 26px; font-weight: bold; }
+      p { opacity: .8; margin-bottom: 18px; }
+
+      input {
+          width: 90%;
+          padding: 12px 15px;
+          border-radius: 12px;
+          border: 2px solid rgba(162, 0, 255, 0.25);
+          background: rgba(0,0,0,0.65);
+          color: #fff;
+          outline: none;
+          font-size: 15px;
+          transition: .25s ease;
+      }
+
+      input:focus {
+          border-color: #b043ff;
+          box-shadow: 0 0 25px rgba(176,46,255,0.9);
+      }
+
+      button {
+          width: 100%;
+          padding: 12px;
+          margin-top: 20px;
+          border: none;
+          border-radius: 10px;
+          background: linear-gradient(to right, #bb29ff, #7a00ff);
+          color: #fff;
+          font-weight: bold;
+          font-size: 16px;
+          cursor: pointer;
+          transition: .25s ease;
+      }
+
+  </style>
+
+</head>
+
+<body>
+
+  <div class="box">
+      <h2>Verify Your Email</h2>
+      <p>Enter the OTP sent to your email</p>
+
+      <form action="/verify" method="POST">
+          <input type="text" name="otp" placeholder="Enter OTP" required>
+          <button type="submit">Verify</button>
+      </form>
+  </div>
+
+</body>
+</html>

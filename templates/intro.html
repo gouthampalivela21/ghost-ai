@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>GHost AI — Intro</title>
+
+  <style>
+    /* ================= RESET ================= */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      overscroll-behavior: none;
+      touch-action: pan-y;
+      background: black;
+      color: white;
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* ================= BACKGROUND GLOW ================= */
+    .bg {
+      position: fixed;
+      inset: 0;
+      z-index: -2;
+      background:
+        radial-gradient(circle at 30% 40%, rgba(184,76,255,0.18), transparent 60%),
+        radial-gradient(circle at 70% 60%, rgba(120,40,255,0.12), transparent 65%),
+        black;
+    }
+
+    main {
+      position: relative;
+    }
+
+    /* ================= FULLSCREEN SECTIONS ================= */
+    .story-section {
+      height: 100vh;
+      padding: 0 12vw;
+      display: flex;
+      align-items: center;
+    }
+
+    .story-content {
+      max-width: 760px;
+    }
+
+    .story-title {
+      font-size: clamp(56px, 6vw, 96px);
+      font-weight: 800;
+      line-height: 1.05;
+      letter-spacing: -1.5px;
+    }
+
+    .story-text {
+      margin-top: 28px;
+      font-size: 20px;
+      line-height: 1.6;
+      color: rgba(255,255,255,0.72);
+      max-width: 620px;
+    }
+
+    /* ================= POP-IN ANIMATION ================= */
+    .reveal {
+      opacity: 0;
+      transform: translateY(80px) scale(0.96);
+      transition:
+        opacity 0.9s ease,
+        transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .reveal.active {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+
+    /* ================= iOS SLIDE EXIT ================= */
+    body.leaving {
+      transition:
+        transform 0.55s cubic-bezier(0.22, 1, 0.36, 1),
+        opacity 0.4s ease;
+      transform: translateX(60px) scale(0.98);
+      opacity: 0;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Background -->
+  <div class="bg"></div>
+
+  <!-- ================= CONTENT ================= -->
+  <main>
+
+    <section class="story-section">
+      <div class="story-content reveal">
+        <h1 class="story-title">An AI That<br>Feels Alive</h1>
+        <p class="story-text">
+          GHost AI is not a chatbot.
+          It’s an evolving intelligence designed
+          to understand, remember, and grow with you.
+        </p>
+      </div>
+    </section>
+
+    <section class="story-section">
+      <div class="story-content reveal">
+        <h1 class="story-title">Built to Remember</h1>
+        <p class="story-text">
+          Conversations persist.
+          Context compounds.
+          Intelligence deepens over time.
+        </p>
+      </div>
+    </section>
+
+    <section class="story-section">
+      <div class="story-content reveal">
+        <h1 class="story-title">Designed for Humans</h1>
+        <p class="story-text">
+          Natural interaction,
+          emotional awareness,
+          and intelligence that adapts to you.
+        </p>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ================= POP-IN ON SCROLL ================= -->
+  <script>
+    const observer = new IntersectionObserver(
+      entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("active");
+          }
+        });
+      },
+      { threshold: 0.4 }
+    );
+
+    document.querySelectorAll(".reveal").forEach(el => observer.observe(el));
+  </script>
+
+  <!-- ================= 🍎 APPLE SAFE BACK + SLIDE ================= -->
+  <script>
+    const FALLBACK_URL = "/";
+
+    let startX = null;
+
+    // Swipe right → back
+    window.addEventListener("touchstart", e => {
+      startX = e.touches[0].clientX;
+    });
+
+    window.addEventListener("touchend", e => {
+      if (!startX) return;
+      const diff = e.changedTouches[0].clientX - startX;
+      if (diff > 120) goBackIOS();
+      startX = null;
+    });
+
+    // Click empty background → back
+    document.addEventListener("click", e => {
+      if (e.target.closest("main, section, h1, p, a, button")) return;
+      goBackIOS();
+    });
+
+    function goBackIOS() {
+      document.body.classList.add("leaving");
+
+      setTimeout(() => {
+        if (document.referrer && !document.referrer.includes("/intro")) {
+          location.href = document.referrer;
+        } else {
+          location.href = FALLBACK_URL;
+        }
+      }, 420);
+    }
+  </script>
+
+</body>
+</html>

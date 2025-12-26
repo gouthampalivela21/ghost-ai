@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>GHost AI</title>
+
+  <style>
+      body {
+          display:flex;
+          justify-content:center;
+          align-items:center;
+          height:100vh;
+          background:black;
+          color:white;
+          margin:0;
+          font-family:Arial;
+      }
+
+      .box {
+          width:360px;
+          padding:35px;
+          background:rgba(20,20,20,0.6);
+          border-radius:16px;
+          backdrop-filter:blur(12px);
+          box-shadow:0 0 35px rgba(162,0,255,0.45);
+          border:1px solid rgba(255,255,255,0.15);
+          text-align:center;
+      }
+
+      h2 { margin-bottom:10px; }
+      p { opacity:.8; margin-bottom:20px; }
+
+      input {
+          width:90%;
+          padding:12px;
+          border-radius:12px;
+          border:2px solid rgba(162,0,255,0.25);
+          background:rgba(0,0,0,0.65);
+          color:white;
+          outline:none;
+          font-size:15px;
+          transition:.3s;
+      }
+
+      input:focus {
+          box-shadow:0 0 25px rgba(176,46,255,0.9);
+          border-color:#b043ff;
+      }
+
+      button {
+          width:100%;
+          padding:12px;
+          margin-top:20px;
+          border:none;
+          border-radius:10px;
+          background:linear-gradient(to right,#bb29ff,#7a00ff);
+          color:white;
+          font-weight:bold;
+          cursor:pointer;
+      }
+  </style>
+
+</head>
+
+<body>
+
+<div class="box">
+
+  <h2>Reset Password</h2>
+  <p>Enter the OTP sent to your email</p>
+
+  <form action="/reset-otp" method="POST">
+      <input type="text" name="otp" placeholder="Enter OTP" required>
+      <button type="submit">Continue</button>
+  </form>
+
+</div>
+
+</body>
+</html>
