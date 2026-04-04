@@ -14,9 +14,19 @@ A web-based AI chatbot application that interacts with users and provides intell
 - Backend: Python (Flask)
 - Database: Firebase
 - APIs: AI & authentication integrations
-
 ## 📸 Screenshots
-(Add your screenshots here)
+
+### 💬 Chat Interface
+<img src="screenshots/chat.png" width="700"/>
+
+### 🏠 Home Page
+<img src="screenshots/home.png" width="700"/>
+
+### 🔐 Login Page
+<img src="screenshots/login1.jpeg" width="700"/>
+
+### 🔐 Login Page
+<img src="screenshots/login.png" width="700"/>
 
 ## ⚙️ Installation
 
