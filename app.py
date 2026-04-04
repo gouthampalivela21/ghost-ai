@@ -32,7 +32,7 @@ from google_auth_oauthlib.flow import Flow
 import google.auth.transport.requests
 import wikipedia
 import feedparser
-# 🔥 DUCKDUCKGO SEARCH (ADDITION ONLY)
+
 from duckduckgo_search import DDGS
 import traceback
 
@@ -81,9 +81,6 @@ def resolve_indian_leaders(text: str) -> str | None:
     return None
 
 FACT_RESOLVER.append(resolve_indian_leaders)
-# =========================
-# 🛡️ HALLUCINATION GUARD
-# =========================
 
 def is_fact_query(text: str) -> bool:
     keywords = [
@@ -93,7 +90,6 @@ def is_fact_query(text: str) -> bool:
     ]
     return any(k in text.lower() for k in keywords)
 
-
 def get_verified_context(user_text: str) -> str:
     if is_fact_query(user_text):
         try:
@@ -101,7 +97,6 @@ def get_verified_context(user_text: str) -> str:
         except:
             return ""
     return ""
-
 
 def hallucination_guard(user_text: str, verified_context: str) -> str:
     return f"""
@@ -118,9 +113,6 @@ Verified context:
 """
 
 GOOGLE_CLIENT_ID = os.getenv("GOOGLE_CLIENT_ID")
-# =========================
-# ENV + CONFIG
-# =========================
 load_dotenv()
 
 FLASK_SECRET = os.getenv("FLASK_SECRET")
@@ -134,9 +126,6 @@ groq_client = Groq(api_key=GROQ_API_KEY) if GROQ_API_KEY else None
 
 ADMIN_EMAILS = {"youradmin@gmail.com"}  # change this
 
-
-# Firebase init
-# Firebase init (SAFE)
 if not firebase_admin._apps:
    SERVICE_ACCOUNT_PATH = os.path.abspath(SERVICE_ACCOUNT) if SERVICE_ACCOUNT else None
 
@@ -155,17 +144,11 @@ users_col = db.collection("users")
 messages_col = db.collection("messages")
 api_keys_col = db.collection("api_keys")
 
-
-# Flask
 app = Flask(__name__, static_folder="static", template_folder="templates")
 app.secret_key = FLASK_SECRET
 bcrypt = Bcrypt(app)
 
 otp_storage = {}  # memory OTP
-
-# =====================================================
-# 🔥 WIKIPEDIA HELPERS (ADDITION ONLY)
-# =====================================================
 
 def needs_wikipedia(text: str) -> bool:
     keywords = [
@@ -201,7 +184,6 @@ def needs_news(text: str) -> bool:
 
 def google_news_lookup(query: str) -> str:
     try:
-        # Google News RSS search
         rss_url = (
             "https://news.google.com/rss/search?"
             f"q={query}&hl=en-IN&gl=IN&ceid=IN:en"
@@ -252,7 +234,6 @@ def inject_wikipedia_context(user_text: str) -> str:
     today = datetime.utcnow().strftime("%Y-%m-%d")
     context_blocks = []
 
-    # 1️⃣ Google News (time-sensitive)
     if needs_news(user_text):
         news_text = google_news_lookup(user_text)
         if news_text:
@@ -260,7 +241,6 @@ def inject_wikipedia_context(user_text: str) -> str:
                 f"GOOGLE NEWS (retrieved {today}):\n{news_text}"
             )
 
-    # 2️⃣ Wikipedia (encyclopedic)
     if needs_wikipedia(user_text):
         wiki_text = wikipedia_lookup(user_text)
         if wiki_text:
@@ -268,7 +248,6 @@ def inject_wikipedia_context(user_text: str) -> str:
                 f"WIKIPEDIA (retrieved {today}):\n{wiki_text}"
             )
 
-    # 3️⃣ DuckDuckGo (fallback web search)
     if not context_blocks and needs_search(user_text):
         search_text = duckduckgo_lookup(user_text)
         if search_text:
@@ -295,16 +274,7 @@ IMPORTANT:
 USER QUESTION:
 {user_text}
 """
-# =====================================================
-# 🔥 GOOGLE NEWS HELPERS (ADDITION ONLY)
-# =====================================================
 
-# =====================================================
-# 🔥 DUCKDUCKGO HELPERS (ADDITION ONLY)
-# =====================================================
-# =========================
-# OTP EMAIL SENDER
-# =========================
 def send_otp(email: str) -> bool:
     if not EMAIL_ADDRESS or not EMAIL_PASSWORD:
         print("Missing email credentials")
@@ -409,10 +379,6 @@ def send_password_changed_email(email: str):
         print("Password change email error:", e)
         return False
 
-
-# =========================
-# AUTH ROUTES
-# =========================
 @app.route("/")
 def index():
     if session.get("email"):
@@ -466,28 +432,7 @@ def premium():
 def connect():
     return render_template("connect.html")
 
-@app.route("/settings")
-@login_required
-def settings():
-    return render_template("settings.html")
 
-@app.route("/verify-email/<token>")
-def verify_email(token):
-    doc = db.collection("email_changes").document(token).get()
-
-    if not doc.exists:
-        abort(404)
-
-    record = doc.to_dict()
-
-    # OPTIONAL: update user email here if needed
-    # db.collection("users").document(record["user_id"]).update({
-    #     "email": record["email"]
-    # })
-
-    db.collection("email_changes").document(token).delete()
-
-    return redirect("/settings?verified=true")
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
@@ -523,9 +468,6 @@ def logout():
     return redirect("/login")
 
 
-# =========================
-# FORGOT / RESET PASSWORD
-# =========================
 @app.route("/forgot-password", methods=["GET", "POST"])
 def forgot_password():
     if request.method == "POST":
@@ -572,13 +514,6 @@ def reset_password():
 
     return render_template("reset_password.html")
 
-# =========================
-# GOOGLE OAUTH LOGIN
-# =========================
-
-# =========================
-# GOOGLE OAUTH LOGIN
-# =========================
 
 os.environ["OAUTHLIB_INSECURE_TRANSPORT"] = "1"  # dev only
 
@@ -632,22 +567,19 @@ def login_callback():
     name = id_info.get("name")
     photo = id_info.get("picture")
 
-    # 👉 If we are CONNECTING account (not logging in)
     if session.get("oauth_action") == "connect":
-        # update existing user only
+        
         users_col.document(session["email"]).update({
             "photo": photo,
             "name": name
         })
 
-        # update session
         session["name"] = name
         session["photo"] = photo
         session["oauth_action"] = None
 
-        return redirect("/settings")   # redirect to settings page (YOU CAN CHANGE)
+        return redirect("/settings")   
 
-    # 👉 Normal Google login flow
     doc = users_col.document(email).get()
 
     if not doc.exists:
@@ -665,9 +597,7 @@ def login_callback():
     register_session(db, email, request)
 
     return redirect("/chat")
-# =========================
-# CHAT + HISTORY
-# =========================
+
 @app.route("/chat")
 def chat():
     if "email" not in session:
@@ -703,151 +633,7 @@ def api_history():
         )
     return jsonify(out)
 
-@app.route("/settings/update-name", methods=["POST"])
-@login_required
-def update_name():
-    new_name = request.json.get("name", "").strip()
-    email = session["email"]
 
-    if len(new_name) < 2:
-        return jsonify({"error": "Invalid name"}), 400
-
-    db.collection("users").document(email).update({"name": new_name})
-    session["name"] = new_name
-
-    return jsonify({"success": True})
-
-@app.route("/settings/update-email", methods=["POST"])
-@login_required
-def update_email():
-    new_email = request.json.get("email", "").lower()
-
-    token = secrets.token_urlsafe(32)
-
-    db.collection("email_changes").document(token).set({
-    "user_id": session["email"],
-    "email": new_email,
-    "created": datetime.utcnow()
-})
-
-    send_verification_email(new_email, token)
-
-    return jsonify({"success": True})
-
-@app.route("/verify-email/<token>")
-def verify_email_update(token):
-    doc = db.collection("email_changes").document(token).get()
-    if not doc.exists:
-        abort(404)
-
-    record = doc.to_dict()
-    db.collection("email_changes").document(token).delete()
-    return redirect("/settings?verified=true")
-
-@app.route("/settings/change-password", methods=["POST"])
-@login_required
-def change_password():
-    pwd = request.json.get("password")
-    email = session["email"]
-
-    if len(pwd) < 8:
-        return jsonify({"error": "Weak password"}), 400
-
-    hashed = bcrypt.generate_password_hash(pwd).decode("utf-8")
-    db.collection("users").document(email).update({"password": hashed})
-
-    send_password_changed_email(email)
-
-    return jsonify({"success": True})
-
-@app.route("/settings/sessions")
-@login_required
-def list_sessions():
-    email = session["email"]
-
-    docs = (
-        db.collection("sessions")
-        .where("user_id", "==", email)
-        .where("active", "==", True)
-        .stream()
-    )
-
-    sessions = []
-    for d in docs:
-        sessions.append(d.to_dict())
-
-    return jsonify(sessions)
-
-@app.route("/settings/logout-others", methods=["POST"])
-@login_required
-def logout_others():
-    email = session["email"]
-    current_ip = request.remote_addr
-
-    docs = (
-        db.collection("sessions")
-        .where("user_id", "==", email)
-        .stream()
-    )
-
-    for d in docs:
-        data = d.to_dict()
-        if data.get("ip") != current_ip:
-            d.reference.update({"active": False})
-
-    return jsonify({"success": True})
-
-@app.route("/settings/theme", methods=["POST"])
-@login_required
-def save_theme():
-    theme = request.json.get("theme", "dark")
-
-    db.collection("users").document(session["email"]).update({
-    "theme": theme
-})
-    return jsonify({"success": True})
-
-@app.route("/settings/export-chat", methods=["POST"])
-@login_required
-def export_chat():
-    email = request.json.get("email")
-
-    token = secrets.token_urlsafe(32)
-    create_chat_export_file(session["email"], token)
-
-    send_download_email(email, token)
-    return jsonify({"success": True})
-
-@app.route("/download/chat/<token>")
-def download_chat(token):
-    path = f"/exports/{token}.txt"
-    if not os.path.exists(path):
-        abort(404)
-    return send_file(path, as_attachment=True)
-
-@app.route("/settings/delete-account", methods=["POST"])
-@login_required
-def delete_account():
-    email = session["email"]
-
-    # delete user
-    db.collection("users").document(email).delete()
-
-    # delete sessions
-    docs = db.collection("sessions").where("user_id", "==", email).stream()
-    for d in docs:
-        d.reference.delete()
-
-    # delete messages
-    msgs = db.collection("messages").where("user", "==", email).stream()
-    for m in msgs:
-        m.reference.delete()
-
-    session.clear()
-    return jsonify({"success": True})
-# =========================
-# STREAMING: GROQ ONLY
-# =========================
 def groq_stream(text: str, full_reply_holder: list):
     if not groq_client:
         print("Groq client not configured")
@@ -872,7 +658,7 @@ def groq_stream(text: str, full_reply_holder: list):
             delta = chunk.choices[0].delta
             if delta and delta.content:
                 full_reply_holder[0] += delta.content
-                yield delta.content   # ✅ THIS WAS MISSING
+                yield delta.content   
 
     except Exception as e:
         print("Groq stream error:", e)
@@ -888,13 +674,12 @@ def stream_reply():
     text = body.get("message", "")
     convo = body.get("convo", "default")
 
-    # 🔥 WIKIPEDIA CONTEXT (ADD HERE)
     final_text =text
 
     messages_col.add({
         "user": email,
         "sender": "user",
-        "text": text,              # original text saved
+        "text": text,              
         "convo": convo,
         "ts": datetime.utcnow(),
     })
@@ -903,7 +688,7 @@ def stream_reply():
         full_reply = [""]
 
         try:
-            for chunk in groq_stream(final_text, full_reply):  # AI uses enriched text
+            for chunk in groq_stream(final_text, full_reply):  
                 yield f"data: {json.dumps({'chunk': chunk})}\n\n"
         except Exception as e:
             err = "⚠️ AI backend error"
@@ -920,19 +705,6 @@ def stream_reply():
 
     return Response(generate(), mimetype="text/event-stream")
 
-def create_chat_export_file(user_email, token):
-    os.makedirs("exports", exist_ok=True)
-    path = f"exports/{token}.txt"
-    with open(path, "w") as f:
-        f.write("Chat export coming soon.")
 
-def send_download_email(email, token):
-    print("Download link sent to", email)
-
-def send_verification_email(email, token):
-    print("Verification email sent to", email)
-# =========================
-# MAIN RUN
-# =========================
 if __name__ == "__main__":
     app.run(debug=True)

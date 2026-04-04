@@ -1,8 +1,6 @@
 console.log("🔥 Superfast streaming client loaded");
 
-/* ----------------------------------------
-   MESSAGE BUBBLE HELPERS
-------------------------------------------- */
+
 function addBubble(cls, txt) {
     const messages = document.getElementById("messages");
 
@@ -14,9 +12,7 @@ function addBubble(cls, txt) {
     messages.scrollTop = messages.scrollHeight;
 }
 
-/* ----------------------------------------
-   SMALL TYPING BUBBLE
-------------------------------------------- */
+
 function showTyping() {
     const messages = document.getElementById("messages");
 
@@ -44,9 +40,7 @@ function hideTyping() {
     if (t) t.remove();
 }
 
-/* ----------------------------------------
-   SUPERFAST STREAMING FUNCTION
-------------------------------------------- */
+
 async function sendStreamingMessage(text) {
     const messages = document.getElementById("messages");
 
@@ -110,9 +104,6 @@ async function sendStreamingMessage(text) {
     hideTyping();
 }
 
-/* ----------------------------------------
-   PAGE LOAD
-------------------------------------------- */
 document.addEventListener("DOMContentLoaded", () => {
     const form = document.getElementById("inputForm");
 
@@ -159,9 +150,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 });
 
-/* ----------------------------------------
-   LOAD CONVERSATION
-------------------------------------------- */
+
 function loadConversation(id) {
     fetch("/api/history")
         .then(r => r.json())
@@ -173,9 +162,7 @@ function loadConversation(id) {
         });
 }
 
-/* ----------------------------------------
-   PROFILE POPUP CLOSE HANDLERS
-------------------------------------------- */
+
 document.addEventListener("click", (e) => {
     if (
         profilePopup.classList.contains("active") &&

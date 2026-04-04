@@ -1,6 +1,6 @@
 gsap.registerPlugin(ScrollTrigger);
 
-// Animate text on scroll
+
 gsap.utils.toArray(".section").forEach(section => {
   gsap.from(section.querySelector(".title"), {
     opacity: 0,
@@ -24,7 +24,7 @@ gsap.utils.toArray(".section").forEach(section => {
   });
 });
 
-// NAV ACTIVE LINK
+
 const sections = document.querySelectorAll(".section");
 const navLinks = document.querySelectorAll(".nav-link");
 

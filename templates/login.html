@@ -1,213 +1,253 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>GHost AI</title>
-  <style>
-      body {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          height: 100vh;
-          margin: 0;
-          background: #000;
-          font-family: Arial, sans-serif;
-          color: #fff;
-      }
+<meta charset="UTF-8">
+<title>GHost AI • Login</title>
 
-      .box {
-          width: 360px;
-          padding: 38px;
-          background: rgba(20,20,20,0.7);
-          backdrop-filter: blur(12px);
-          text-align: center;
-          border-radius: 16px;
-          border: 1px solid rgba(255,255,255,0.15);
-          box-shadow: 0 0 35px rgba(162,0,255,0.45);
-      }
+<style>
+/* ================= BASE ================= */
+* { box-sizing: border-box; }
 
-      h2 {
-          margin-bottom: 20px;
-          font-size: 30px;
-          font-weight: bold;
-      }
+body {
+  margin: 0;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: radial-gradient(circle at top, #1a0025, #000);
+  font-family: -apple-system, BlinkMacSystemFont, "Inter", Arial, sans-serif;
+  color: #fff;
+  overflow: hidden;
+}
 
-      label {
-          float: left;
-          margin-left: 5px;
-          font-size: 14px;
-          opacity: .85;
-      }
+/* ================= AMBIENT GLOW ================= */
+body::before {
+  content: "";
+  position: absolute;
+  width: 420px;
+  height: 420px;
+  background: radial-gradient(circle, rgba(180,60,255,0.35), transparent 65%);
+  filter: blur(80px);
+  animation: float 10s ease-in-out infinite;
+}
 
-      input {
-          width: 90%;
-          padding: 12px 15px;
-          border-radius: 12px;
-          border: 2px solid rgba(162,0,255,0.25);
-          background: rgba(0,0,0,0.65);
-          color: #fff;
-          outline: none;
-          font-size: 15px;
-          margin-bottom: 15px;
-          transition: .25s ease;
-          box-shadow: 0 0 0 rgba(162,0,255,0);
-      }
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-25px); }
+  100% { transform: translateY(0px); }
+}
 
-      input:focus {
-          border-color: #b043ff;
-          box-shadow: 0 0 25px rgba(176,46,255,0.8);
-      }
+/* ================= BOX ================= */
+.box {
+  width: 390px;
+  padding: 44px 42px;
+  background: rgba(18,18,18,0.65);
+  backdrop-filter: blur(18px);
+  border-radius: 20px;
+  border: 1px solid rgba(255,255,255,0.12);
+  box-shadow:
+    0 0 35px rgba(162,0,255,0.35),
+    inset 0 0 0 1px rgba(255,255,255,0.05);
+  text-align: center;
+  animation: enter 0.8s ease forwards;
+}
 
-      button {
-          width: 100%;
-          padding: 12px;
-          border: none;
-          border-radius: 10px;
-          background: linear-gradient(to right, #bb29ff, #7a00ff);
-          color: white;
-          font-size: 16px;
-          font-weight: bold;
-          cursor: pointer;
-          margin-top: 10px;
-          box-shadow: 0 0 18px rgba(150,0,255,0.35);
-          transition: .3s;
-      }
+@keyframes enter {
+  from { opacity: 0; transform: translateY(30px) scale(0.97); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
 
-      button:hover {
-          transform: translateY(-2px);
-          box-shadow: 0 0 30px rgba(150,0,255,0.75);
-      }
+/* ================= HEADER ================= */
+h2 {
+  font-size: 32px;
+  margin-bottom: 22px;
+  background: linear-gradient(90deg,#c77dff,#8b5cf6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
 
-      a {
-          color: #b043ff;
-          text-decoration: none;
-          font-size: 14px;
-      }
-
-      a:hover {
-          text-decoration: underline;
-      }
-      .password-wrapper {
+/* ================= INPUT GROUP ================= */
+.field {
   position: relative;
+  margin-bottom: 18px;
+}
+
+.field input {
+  width: 100%;
+  padding: 14px 16px;
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,0.18);
+  background: rgba(0,0,0,0.5);
+  color: white;
+  font-size: 15px;
+  outline: none;
+  transition: .25s;
+}
+
+.field input:focus {
+  border-color: #b84cff;
+  box-shadow: 0 0 0 3px rgba(184,76,255,.35);
+}
+
+/* FLOATING LABEL */
+.field label {
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 13px;
+  color: rgba(255,255,255,0.55);
+  pointer-events: none;
+  transition: .25s;
+  background: rgba(18,18,18,0.9);
+  padding: 0 6px;
+}
+
+.field input:focus + label,
+.field input:not(:placeholder-shown) + label {
+  top: -7px;
+  font-size: 11px;
+  color: #c77dff;
+}
+
+/* ================= PASSWORD ================= */
+.password-wrapper {
+  position: relative;
+}
+
+.toggle {
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  font-size: 20px;
+  opacity: .6;
+  transition: .2s;
+}
+
+.toggle:hover {
+  opacity: 1;
+  transform: translateY(-50%) scale(1.15);
+}
+
+/* ================= BUTTON ================= */
+button {
+  width: 100%;
+  padding: 14px;
+  border-radius: 999px;
+  border: none;
+  font-size: 16px;
+  font-weight: 600;
+  color: white;
+  background: linear-gradient(135deg,#7a2cff,#b26bff);
+  cursor: pointer;
+  box-shadow: 0 0 22px rgba(184,76,255,.6);
+  transition: .3s;
+  margin-top: 6px;
+}
+
+button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 40px rgba(184,76,255,.9);
+}
+
+/* ================= GOOGLE ================= */
+.google-btn {
+  margin-top: 18px;
   display: flex;
   align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 12px;
+  border-radius: 999px;
+  background: #fff;
+  color: #000;
+  font-weight: 600;
+  text-decoration: none;
+  font-size: 14px;
+  transition: .25s;
 }
 
-.password-wrapper input {
-  width: 100%;
-  padding-right: 40px;
+.google-btn img {
+  width: 20px;
 }
 
-.toggle-eye {
-  position: absolute;
-  right: 12px;
-  cursor: pointer;
-  font-size: 18px;
-  opacity: 0.6;
-  transition: 0.2s;
+.google-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 20px rgba(255,255,255,.35);
 }
 
-.toggle-eye:hover {
-  opacity: 1;
-}
-.google-button {
-    width: 100%;
-    margin-top: 18px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-
-    padding: 12px;
-    border-radius: 50px;
-
-    background: #ffffff;
-    color: #000;
-    font-size: 14px;
-    font-weight: 600;
-    text-decoration: none;
-
-    border: 1px solid #e5e5e5;
-
-    transition: all 0.25s ease;
-    cursor: pointer;
+/* ================= FOOTER ================= */
+a {
+  display: inline-block;
+  margin-top: 18px;
+  font-size: 14px;
+  color: #c77dff;
+  text-decoration: none;
 }
 
-.google-button img {
-    width: 20px;
-    height: 20px;
+a:hover {
+  text-decoration: underline;
 }
 
-.google-button:hover {
-    background: #f5f5f5;
-    transform: translateY(-1px);
-    box-shadow: 0 0 18px rgba(255,255,255,0.2);
+.error {
+  color: #ff6b6b;
+  font-size: 14px;
+  margin-bottom: 10px;
 }
-
-.google-button:active {
-    transform: translateY(0px);
-}
-  </style>
+</style>
 </head>
 
 <body>
 
-  <div class="box">
-      <h2>Login to Your Account</h2>
+<div class="box">
+  <h2>Welcome Back</h2>
 
-      <form action="/login" method="POST">
+  <form action="/login" method="POST">
 
-    <input type="email" name="email" id="emailInput"
-    placeholder="email" required>
-
-    <div class="password-wrapper" style="position: relative;">
-      <span id="togglePw" 
-        style="
-              position:absolute;
-              right:12px;
-              top:40%;
-              transform:translateY(-50%);
-              cursor: pointer;
-              font-size: 18px;
-              opacity: 0.6;
-              transition: 0.2s;
-        ">🐵</span>
-      <input type="password" name="password" id="passwordInput"
-        placeholder="Password" style="width:100%;
-        padding-right:40px;"/>
+    <div class="field">
+      <input type="email" name="email" required placeholder=" ">
+      <label>Email</label>
     </div>
 
-    {% if error %}
-    <p style="color:red; text-align:center; margin: -5px 0 10px 0; font-weight: bold;">
-        {{ error }}
-    </p>
-    {% endif %}
+    <div class="field password-wrapper">
+      <input type="password" name="password" id="passwordInput" required placeholder=" ">
+      <label>Password</label>
+      <span class="toggle" id="togglePw">🐵</span>
+    </div>
 
-    <button type="submit">Login</button>
-</form>
-
-      <br>
-      <a href="/forgot-password">Forgot password?</a> <br><br>
-      <a href="/signup">Don't have an account? Sign Up</a>
+     {% if error %}
+    <div class="error">{{ error }}</div>
+  {% endif %}
   
-  <a href="/login/google" class="google-button">
-    <img src="/static/Google.png" alt="Google logo" />
-    <span>Sign in with Google</span>
-</a>
-  </div>
-<script>
-  const pwInput = document.getElementById("passwordInput");
-  const togglePw = document.getElementById("togglePw");
+    <button type="submit">Login</button>
+  </form>
 
-  togglePw.onclick = () => {
-    if (pwInput.type === "password") {
-      pwInput.type = "text";
-      togglePw.textContent = "🙈";
-    } else {
-      pwInput.type = "password";
-      togglePw.textContent = "🐵";
-    }
-  };
+  <a href="/forgot-password">Forgot password?</a>
+
+  <a href="/login/google" class="google-btn">
+    <img src="/static/Google.png" alt="Google">
+    Continue with Google
+  </a>
+
+  <a href="/signup">Don’t have an account? Sign up</a>
+</div>
+
+<script>
+const pw = document.getElementById("passwordInput");
+const toggle = document.getElementById("togglePw");
+
+toggle.onclick = () => {
+  if (pw.type === "password") {
+    pw.type = "text";
+    toggle.textContent = "🙈";
+  } else {
+    pw.type = "password";
+    toggle.textContent = "🐵";
+  }
+};
 </script>
+
 </body>
 </html>

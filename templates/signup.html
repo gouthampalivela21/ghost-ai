@@ -1,125 +1,215 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>GHost AI</title>
+<meta charset="UTF-8">
+<title>GHost AI • Sign Up</title>
 
 <style>
-    body {
-        display:flex;
-        justify-content:center;
-        align-items:center;
-        height:100vh;
-        margin:0;
-        background:#000;
-        font-family:Arial;
-        color:white;
-    }
+/* ================= BASE ================= */
+* { box-sizing: border-box; }
 
-    .box {
-        width:380px;
-        padding:40px;
-        text-align:center;
-        background:rgba(20,20,20,0.7);
-        backdrop-filter:blur(12px);
-        border-radius:16px;
-        border:1px solid rgba(255,255,255,0.15);
-        box-shadow:0 0 35px rgba(162,0,255,0.45);
-    }
+body {
+  margin: 0;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: radial-gradient(circle at top, #1a0025, #000);
+  font-family: -apple-system, BlinkMacSystemFont, "Inter", Arial, sans-serif;
+  color: #fff;
+  overflow: hidden;
+}
 
-    h2 {
-        font-size:30px;
-        margin-bottom:15px;
-    }
+/* ================= AMBIENT GLOW ================= */
+body::before {
+  content: "";
+  position: absolute;
+  width: 420px;
+  height: 420px;
+  background: radial-gradient(circle, rgba(180,60,255,0.35), transparent 65%);
+  filter: blur(80px);
+  animation: float 10s ease-in-out infinite;
+}
 
-    label { float:left; margin-left:5px; font-size:14px; opacity:.85; }
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-25px); }
+  100% { transform: translateY(0px); }
+}
 
-    input {
-        width:90%;
-        padding:12px 15px;
-        border-radius:12px;
-        border:2px solid rgba(162,0,255,0.25);
-        background:rgba(0,0,0,0.65);
-        color:white;
-        outline:none;
-        font-size:15px;
-        margin-bottom:15px;
-        transition:.25s;
-    }
+/* ================= BOX ================= */
+.box {
+  width: 390px;
+  padding: 44px 42px;
+  background: rgba(18,18,18,0.65);
+  backdrop-filter: blur(18px);
+  border-radius: 20px;
+  border: 1px solid rgba(255,255,255,0.12);
+  box-shadow:
+    0 0 35px rgba(162,0,255,0.35),
+    inset 0 0 0 1px rgba(255,255,255,0.05);
+  text-align: center;
+  animation: enter 0.8s ease forwards;
+}
 
-    input:focus {
-        border-color:#b043ff;
-        box-shadow:0 0 25px rgba(176,46,255,0.8);
-    }
+@keyframes enter {
+  from { opacity: 0; transform: translateY(30px) scale(0.97); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
 
-    button {
-        width:100%;
-        padding:12px;
-        border:none;
-        border-radius:10px;
-        color:white;
-        background:linear-gradient(to right,#bb29ff,#7a00ff);
-        font-size:16px;
-        cursor:pointer;
-        margin-top:8px;
-        box-shadow:0 0 18px rgba(150,0,255,0.35);
-    }
+/* ================= HEADER ================= */
+h2 {
+  font-size: 32px;
+  margin-bottom: 22px;
+  background: linear-gradient(90deg,#c77dff,#8b5cf6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
 
-    button:hover {
-        transform:translateY(-2px);
-        box-shadow:0 0 30px rgba(150,0,255,0.75);
-    }
+/* ================= INPUT GROUP ================= */
+.field {
+  position: relative;
+  margin-bottom: 18px;
+}
 
-    a { color:#c26bff; font-size:14px; }
-    
+.field input {
+  width: 100%;
+  padding: 14px 16px;
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,0.18);
+  background: rgba(0,0,0,0.5);
+  color: white;
+  font-size: 15px;
+  outline: none;
+  transition: .25s;
+}
+
+.field input:focus {
+  border-color: #b84cff;
+  box-shadow: 0 0 0 3px rgba(184,76,255,.35);
+}
+
+/* FLOATING LABEL */
+.field label {
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 13px;
+  color: rgba(255,255,255,0.55);
+  pointer-events: none;
+  transition: .25s;
+  background: rgba(18,18,18,0.9);
+  padding: 0 6px;
+}
+
+.field input:focus + label,
+.field input:not(:placeholder-shown) + label {
+  top: -7px;
+  font-size: 11px;
+  color: #c77dff;
+}
+
+/* ================= PASSWORD ================= */
+.password-wrapper {
+  position: relative;
+}
+
+.toggle {
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  font-size: 20px;
+  opacity: .6;
+  transition: .2s;
+}
+
+.toggle:hover {
+  opacity: 1;
+  transform: translateY(-50%) scale(1.15);
+}
+
+/* ================= BUTTON ================= */
+button {
+  width: 100%;
+  padding: 14px;
+  border-radius: 999px;
+  border: none;
+  font-size: 16px;
+  font-weight: 600;
+  color: white;
+  background: linear-gradient(135deg,#7a2cff,#b26bff);
+  cursor: pointer;
+  box-shadow: 0 0 22px rgba(184,76,255,.6);
+  transition: .3s;
+  margin-top: 6px;
+}
+
+button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 40px rgba(184,76,255,.9);
+}
+
+/* ================= FOOTER ================= */
+a {
+  display: inline-block;
+  margin-top: 18px;
+  font-size: 14px;
+  color: #c77dff;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
 </style>
 </head>
+
 <body>
 
 <div class="box">
-    <h2>Create Account</h2>
-    <form action="/signup" method="POST">
-        <input type="text" name="name" id="nameInput"
-    placeholder="name" required>
+  <h2>Create Account</h2>
 
-        <input type="email" name="email" id="emailInput"
-    placeholder="email" required>
+  <form action="/signup" method="POST">
 
-       <div class="password-wrapper" style="position: relative;">
-      <span id="togglePw" 
-        style="
-              position:absolute;
-              right:12px;
-              top:40%;
-              transform:translateY(-50%);
-              cursor: pointer;
-              font-size: 20px;
-              opacity: 0.6;
-              transition: 0.2s;
-        ">🐵</span>
-      <input type="password" name="password" id="passwordInput"
-        placeholder="Password" style="width:83%;
-        padding-right:40px;"/>
+    <div class="field">
+      <input type="text" name="name" required placeholder=" ">
+      <label>Name</label>
     </div>
-        <button type="submit">Sign Up</button>
-    </form>
 
-    <br>
-    <a href="/login">Already have an account? Login</a>
+    <div class="field">
+      <input type="email" name="email" required placeholder=" ">
+      <label>Email</label>
+    </div>
 
+    <div class="field password-wrapper">
+      <input type="password" name="password" id="passwordInput" required placeholder=" ">
+      <label>Password</label>
+      <span class="toggle" id="togglePw">🐵</span>
+    </div>
+
+    <button type="submit">Sign Up</button>
+  </form>
+
+  <a href="/login">Already have an account? Login</a>
 </div>
-<script>
-  const pwInput = document.getElementById("passwordInput");
-  const togglePw = document.getElementById("togglePw");
 
-  togglePw.onclick = () => {
-    if (pwInput.type === "password") {
-      pwInput.type = "text";
-      togglePw.textContent = "🙈";
-    } else {
-      pwInput.type = "password";
-      togglePw.textContent = "🐵";
-    }
-  };
+<script>
+const pw = document.getElementById("passwordInput");
+const toggle = document.getElementById("togglePw");
+
+toggle.onclick = () => {
+  if (pw.type === "password") {
+    pw.type = "text";
+    toggle.textContent = "🙈";
+  } else {
+    pw.type = "password";
+    toggle.textContent = "🐵";
+  }
+};
 </script>
+
 </body>
 </html>

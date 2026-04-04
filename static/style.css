@@ -11,7 +11,7 @@ body{
   min-height: 100vh;
   line-height: 1.5;
 }
-/* GRADIENT AND LAYER BLUR EFFECT*/
+
 .image-gradient {
   position: absolute;
   top: 0;
@@ -29,7 +29,7 @@ body{
   rotate: -30deg;
   z-index: -1;
 }
-/* CONTAINER */
+
 .container{
   width: 100%;
   margin: 0 auto;
@@ -37,7 +37,7 @@ body{
   position: relative;
   overflow: hidden;
 }
-/* HEADER */
+
 header{
   display: flex;
   justify-content: space-between;
@@ -90,8 +90,6 @@ nav a:hover{
 
 }
 
-
-/* MAIN SECTION */
 main{
   display: flex;
   flex-direction: column;
@@ -198,64 +196,6 @@ main{
   top: 0;
   right: -20%;
 }
-
-/* MOBILE RESPONSIVE */
-@media (max-width: 768px){
-  header{
-    padding: 1rem 0.1rem;
-  }
-
-  nav{
-    display: none;
-  }
-
-  header h1{
-    font-size: 2rem;
-  }
-
-  .btn-joinus{
-    padding: 0.6rem 1.5rem;
-  }
-
-  .content{
-    margin-top: 25rem;
-  }
-
-  .robot-3D{
-    scale: 0.5;
-    top:-25%;
-    right: 0;
-  }
-
-  .content{
-    max-width: 30rem;
-    margin-left: 10%;
-  }
-
-  .tag-box{
-    width: 12rem;
-  }
-
-  .content h1{
-    font-size: 2.5rem;
-  }
-
-  .description{
-    font-size: 1rem;
-  }
-
-  .btn-signup{
-    font-size: 0.8rem;
-    padding: 0.8rem 1.2rem;
-  }
-
-  .btn-joinus-main{
-    font-size: 0.8rem;
-    padding: 0.8rem 2rem;
-  }
-}
-
-/* SIGN UP PAGE */
 
 {
   margin: padding 0; box-sizing;
@@ -403,7 +343,7 @@ section {
 }
 
 .btn-signup-submit:hover {
-  background: #a855f7; /* purple glow */
+  background: #a855f7; 
   color: #fff;
   box-shadow: 0 0 10px #a855f7, 0 0 20px #a855f7, 0 0 40px #a855f7;
   transform: scale(1.03);
@@ -427,7 +367,6 @@ section {
   text-shadow: 0 0 10px #a855f7, 0 0 20px #a855f7;
 }
 
-/* Remember me + Forgot password row */
 .options-row {
   display: flex;
   justify-content: space-between;
@@ -445,10 +384,9 @@ section {
 }
 
 .remember-me input {
-  accent-color: #a855f7; /* Purple checkbox for dark mode */
+  accent-color: #a855f7; 
 }
 
-/* Forgot password link */
 .forgot-password {
   text-decoration: none;
   color: inherit;
@@ -459,7 +397,6 @@ section {
   text-decoration: underline;
 }
 
-/* 🌟 Forgot Password Modal */
 .modal {
   display: none;
   position: fixed;
@@ -531,7 +468,7 @@ section {
   transition: all 0.3s ease;
 }
 
-/* Cancel + Reset buttons */
+
 .btn-cancel {
   background: #fff;
   color: #000;
@@ -547,7 +484,7 @@ section {
   opacity: 0.9;
 }
 
-/* ✅ Success Message */
+
 .success-message {
   display: none;
   margin-top: 15px;
@@ -557,13 +494,13 @@ section {
   opacity: 0;
   transition: opacity 0.5s ease;
 }
-/*google button*/
+
 .google-btn {
   display: inline-flex;
   align-items: center;
   gap: 10px;
   padding: 12px 25px;
-  background: #ffffff !important;   /* solid white */
+  background: #ffffff !important;  
   color: #444;
   border: 2px solid rgba(255, 255, 255, 0.4);
   border-radius: 40px;
@@ -573,7 +510,7 @@ section {
   text-align: center;
   box-shadow: 0 2px 6px rgba(0,0,0,0.20);
 
-  /* 🌟 Smooth Transition Animation */
+  
   transition:
       background 0.4s ease,
       border-color 0.4s ease,
@@ -581,18 +518,16 @@ section {
       transform 0.35s ease;
 }
 
-/* 🌈 Hover Glow + Smooth Expansion */
 .google-btn:hover {
   background: #ffffff;
   border-color: #a855f7;
-  transform: scale(1.07); /* smooth expand */
+  transform: scale(1.07); 
   box-shadow:
     0 0 12px rgba(168, 85, 247, 0.8),
     0 0 25px rgba(168, 85, 247, 0.9),
     0 0 45px rgba(168, 85, 247, 1);
 }
 
-/* ensure Google logo visible */
 .google-btn img {
   filter: none;
 }
