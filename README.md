@@ -35,3 +35,5 @@ A web-based AI chatbot application that interacts with users and provides intell
 ```bash
 git clone https://github.com/gouthampalivela21/ghost-ai.git
 cd ghost-ai
+pip install -r requirements.txt
+python app.py
