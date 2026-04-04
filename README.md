@@ -20,6 +20,9 @@ A web-based AI chatbot application that interacts with users and provides intell
 ### 🏠 Home Page
 <img src="screenshots/home.png" width="700"/>
 
+### 🔐 begin Page
+<img src="screenshots/login1.png" width="700"/>
+
 ### 🔐 Login Page
 <img src="screenshots/login.png" width="700"/>
 
